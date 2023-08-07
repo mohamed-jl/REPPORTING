@@ -16,24 +16,29 @@ public class SubModule  implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "submodulename",unique = true)
+    @Column(name = "submodulename")
     @NonNull
     private String subModuleName;
 
-    @Column(name = "path",unique = true)
+    @Column(name = "path")
     @NonNull
     private String path;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = { CascadeType.DETACH })
     @JoinColumn(name = "module_id")
     @JsonBackReference
     private Module Module;
 
     @Column(name = "function",unique = true)
-    @OneToMany(mappedBy = "subModule",orphanRemoval = true, cascade = {CascadeType.PERSIST ,CascadeType.MERGE,CascadeType.DETACH})
-    @JsonManagedReference
+    @OneToMany(mappedBy = "subModule", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.DETACH })
     private List<Function> functions;
 
+    @Column(nullable = true)
+    private String description;
+    @Column(name="module_order")
+    @GeneratedValue
+    @JsonIgnore
+    private Integer order;
 
     public SubModule(Long id, @NonNull String subModuleName, @NonNull String path, com.example.backend.entities.Module module, List<Function> functions) {
         this.id = id;
@@ -85,5 +90,21 @@ public class SubModule  implements Serializable {
 
     public void setFunctions(List<Function> functions) {
         this.functions = functions;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

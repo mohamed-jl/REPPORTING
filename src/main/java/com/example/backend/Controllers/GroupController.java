@@ -1,6 +1,8 @@
 package com.example.backend.Controllers;
 
+import com.example.backend.entities.Function;
 import com.example.backend.entities.Group;
+import com.example.backend.entities.Module;
 import com.example.backend.services.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,13 +26,11 @@ public class GroupController {
 
     @RequestMapping(value="/add",method= RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addGroup(@RequestBody Group group) {
-        if(group==null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else{
+
             groupService.addGroup(group);
             return new ResponseEntity<>(group,HttpStatus.OK);
         }
-    }
+
 
     @RequestMapping(value="/edit/{id}",method= RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> editGroup(@RequestBody Group group,@PathVariable Long id) {
@@ -61,6 +63,57 @@ public class GroupController {
     public List<Group> findGroupByModule(@PathVariable Long Id){
         return groupService.findGroupByModule(Id);
     }
+
+
+    @DeleteMapping("/{groupId}/modules/{moduleId}")
+    public ResponseEntity<Void> removeModuleFromGroup(@PathVariable Long groupId, @PathVariable Long moduleId) {
+        groupService.removeModuleFromGroup(groupId, moduleId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{groupId}/functions/{functionId}")
+    public ResponseEntity<Void> removeFunctionFromGroup(@PathVariable Long groupId, @PathVariable Long functionId) {
+        groupService.removeFunctionFromGroup(groupId, functionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{groupId}/modules")
+    public List<Module> getModulesByGroup(@PathVariable Long groupId) {
+        return groupService.getModulesByGroup(groupId);
+    }
+
+    @GetMapping("/{groupId}/Functions")
+    public List<Function> getFunctionsByGroup(@PathVariable Long groupId) {
+        return groupService.getFunctionsByGroup(groupId);
+    }
+
+    @PostMapping("/{groupId}/modules/{moduleId}")
+    public ResponseEntity<String> assignModuleToGroup(@PathVariable Long groupId, @PathVariable Long moduleId) {
+        try {
+            groupService.assignModuleToGroup(groupId, moduleId);
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while assigning the module to the group");
+        }
+    }
+
+
+
+    @PostMapping("/{groupId}/functions/{functionId}")
+    public ResponseEntity<String> assignFunctionToGroup(@PathVariable Long groupId, @PathVariable Long functionId) {
+        try {
+            groupService.assignFunctionToGroup(groupId, functionId);
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while assigning the function to the group");
+        }
+    }
+
+
 
 
 

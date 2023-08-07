@@ -43,15 +43,15 @@ public class Group implements Serializable {
     private String nomUtilisateur;
     private String etat;
 
-    @OneToMany(mappedBy = "user_group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user_group", cascade = CascadeType.DETACH)
     private List<User> groupUsers;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(name = "module_groups",schema = "management")
-    @JsonIgnoreProperties("group_module")
+    //@JsonIgnoreProperties("group_module")
     private List<Module> module_groups;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST,CascadeType.DETACH })
     @JoinTable(name = "function_group",schema = "management")
     private List<Function> liste_function;
 

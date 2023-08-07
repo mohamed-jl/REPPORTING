@@ -1,10 +1,12 @@
 package com.example.backend.services;
 
 import com.example.backend.dao.SubModuleRepository;
+import com.example.backend.entities.Function;
 import com.example.backend.entities.Module;
 import com.example.backend.entities.ResourceNotFoundException;
 import com.example.backend.entities.SubModule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,20 +19,21 @@ public class SubModuleServiceImpl implements SubModuleService{
 
     @Override
     public SubModule addSubModule(SubModule subModule) {
+
         return subModuleRepository.save(subModule);
     }
 
     @Override
     public List<SubModule> getListSubModule() {
-        return subModuleRepository.findAll();
+        return subModuleRepository.findAll(Sort.by(Sort.Direction.ASC, "order"));
     }
 
     @Override
     public void deleteSubModule(Long Id) {
 
         SubModule subModule = subModuleRepository.getOne(Id);
-        if (subModule != null)
-        {
+        if (subModule != null) {
+
             subModuleRepository.delete(subModule);
         }
 

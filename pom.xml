@@ -97,7 +97,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>springbootwildfly</finalName>
+		<finalName>reporting</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -133,7 +133,7 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<webResources>
 						<resource>
-							<directory>${project.basedir}/src/main/resources/static/reporting</directory>
+							<directory>${project.basedir}/src/main/resources/static/</directory>
 						</resource>
 					</webResources>
 				</configuration>

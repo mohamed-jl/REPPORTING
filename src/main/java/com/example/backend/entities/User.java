@@ -1,14 +1,13 @@
 package com.example.backend.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity(name = "user")
 @Table(schema = "management")
@@ -52,18 +51,20 @@ public class User implements Serializable {
     @Column(name = "u_pwd")
     private String password;
 
-    @Column(name = "token")
-    private String token;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "g_id", referencedColumnName = "g_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     private Group user_group;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "user_reporting", joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "list_rep_id") , schema = "etl")
+    @JoinTable(name = "repports_users", joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "list_rep_id") , schema = "management")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<RepRapport> listreprapport = new ArrayList<>();
+    private List<RepRapport> listreprapport ;
+
 
     public Group getUser_group() {
         return user_group;
@@ -164,24 +165,34 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
-    public String getToken() {
-        return token;
+    public Role getRole() {
+        return role;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<RepRapport> getListreprapport() {
+        return listreprapport;
+    }
+
+    public void setListreprapport(List<RepRapport> listreprapport) {
+        this.listreprapport = listreprapport;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
-    public User(String username, String uMail, String password) {
+    public User(String username, String uMail, String password,List<RepRapport> repRapports,Role role) {
         this.username = username;
         this.uMail = uMail;
         this.password = password;
-
+        this.listreprapport = repRapports;
+        this.role = role;
     }
 
-    public User(){}
+    public User(){
+    }
 }
 

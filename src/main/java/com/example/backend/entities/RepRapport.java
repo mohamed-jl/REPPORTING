@@ -1,5 +1,6 @@
 package com.example.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -20,7 +21,7 @@ public class RepRapport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer id;
+	private Long id;
 	
 	private boolean issimplepie;
 	
@@ -58,14 +59,16 @@ public class RepRapport implements Serializable {
 
 	private Integer limitnumber;
 
-	private boolean isGroupedBy;
+	//private boolean isGroupedBy;
 
 	private String groupeByfield;
+	private boolean isGroupedBy;
 	
 	// bi-directional many-to-one association to RepRapportsX
-	@OneToMany(mappedBy = "repRapport", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<RepRapportsX> repRapportsXs;
+//	@OneToMany(mappedBy = "repRapport", cascade = CascadeType.REMOVE, orphanRemoval = true)
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@JsonIgnore
+//	private List<RepRapportsX> repRapportsXs;
 
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -79,11 +82,11 @@ public class RepRapport implements Serializable {
 	public RepRapport() {
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -119,27 +122,27 @@ public class RepRapport implements Serializable {
 		this.title = title;
 	}
 
-	public List<RepRapportsX> getRepRapportsXs() {
-		return this.repRapportsXs;
-	}
+//	public List<RepRapportsX> getRepRapportsXs() {
+//		return this.repRapportsXs;
+//	}
 
-	public void setRepRapportsXs(List<RepRapportsX> repRapportsXs) {
-		this.repRapportsXs = repRapportsXs;
-	}
+//	public void setRepRapportsXs(List<RepRapportsX> repRapportsXs) {
+//		this.repRapportsXs = repRapportsXs;
+//	}
+//
+//	public RepRapportsX addRepRapportsX(RepRapportsX repRapportsX) {
+//		getRepRapportsXs().add(repRapportsX);
+//		repRapportsX.setRepRapport(this);
+//
+//		return repRapportsX;
+//	}
 
-	public RepRapportsX addRepRapportsX(RepRapportsX repRapportsX) {
-		getRepRapportsXs().add(repRapportsX);
-		repRapportsX.setRepRapport(this);
-
-		return repRapportsX;
-	}
-
-	public RepRapportsX removeRepRapportsX(RepRapportsX repRapportsX) {
-		getRepRapportsXs().remove(repRapportsX);
-		repRapportsX.setRepRapport(null);
-
-		return repRapportsX;
-	}
+//	public RepRapportsX removeRepRapportsX(RepRapportsX repRapportsX) {
+//		getRepRapportsXs().remove(repRapportsX);
+//		repRapportsX.setRepRapport(null);
+//
+//		return repRapportsX;
+//	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.annotation.Resource;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackages = "com.example.backend")
 @CrossOrigin("*")
@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/*","/user/add/","/user/delete/*","/token/*","/user/*","/user","/group","/group/*","/group/delete/*","/group/edit/*","/group/add","/group/module/*","/module/*","/module/delete/*","/module","/module/edit/*","/submodule/*","/submodule/delete/*","/submodule/edit/*","/function/delete/*","/function/*","/function/delete/*","/function/add","/function/edit/*","/springbootwildfly","/check","/token/generate-token","/loginResp").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -83,6 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return  firewall;
 
     }
+
+
 
 
 }

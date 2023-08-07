@@ -21,18 +21,19 @@ public class Function implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_module_id")
-    @JsonBackReference
     private SubModule subModule;
 
-    @ManyToMany(mappedBy = "liste_function",cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "liste_function", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH }, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Group> group;
 
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "function_reporting", joinColumns = @JoinColumn(name = "function_id") , inverseJoinColumns = @JoinColumn(name = "list_rep_id") , schema = "etl")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<RepRapport> listreprapport = new ArrayList<>();
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST ,CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @JoinTable(name = "function_reporting", joinColumns = @JoinColumn(name = "function_id"), inverseJoinColumns = @JoinColumn(name = "list_rep_id"), schema = "management")
+    //@JsonIgnore
+    private List<RepRapport> listreprapport;
+    @Column(nullable = true)
+    private String description;
 
     public Long getId() {
         return id;
@@ -72,5 +73,13 @@ public class Function implements Serializable {
 
     public void setListreprapport(List<RepRapport> listreprapport) {
         this.listreprapport = listreprapport;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

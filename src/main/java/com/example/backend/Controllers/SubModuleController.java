@@ -1,5 +1,6 @@
 package com.example.backend.Controllers;
 
+import com.example.backend.dao.SubModuleRepository;
 import com.example.backend.entities.Module;
 import com.example.backend.entities.SubModule;
 import com.example.backend.services.ModuleService;
@@ -18,9 +19,17 @@ public class SubModuleController {
 
     @Autowired
     private SubModuleService subModuleService;
+    SubModuleRepository subModuleRepository;
+
+    public SubModuleController(SubModuleRepository subModuleRepository) {
+        this.subModuleRepository = subModuleRepository;
+    }
 
     @RequestMapping(value="/add",method= RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addsubModule(@RequestBody SubModule subModule) {
+        List<SubModule> subModuleList = subModuleRepository.findAll();
+        int newOrder = subModuleList.size() + 1;
+        subModule.setOrder(newOrder);
         subModuleService.addSubModule(subModule);
     }
 

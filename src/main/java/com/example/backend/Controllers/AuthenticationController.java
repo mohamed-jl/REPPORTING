@@ -3,6 +3,9 @@ package com.example.backend.Controllers;
 import com.example.backend.conf.JwtTokenUtil;
 import com.example.backend.entities.LoginUser;
 import com.example.backend.entities.User;
+import com.example.backend.entities.Module;
+import com.example.backend.entities.SubModule;
+import com.example.backend.entities.customLoginResp;
 import com.example.backend.services.ModuleService;
 import com.example.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,23 +52,26 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final Optional<User> user = userService.findByUsername(loginUser.getUsername());
-        if(user.isPresent()){
+
             final String token = jwtTokenUtil.generateToken(user.get());
             System.out.println("token:"+token);
             // Return token in response header
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization",token);
-            if(user.get().getUser_group()!=null){
-                return ResponseEntity.ok().headers(headers).body(moduleService.findModuleByGroup(user.get().getUser_group().getgId()));
+            if(user.get()!=null){
+                loginUser.setuId(user.get().getuId());
+                loginUser.setuMail(user.get().getuMail());
+                customLoginResp response = new customLoginResp();
+                if(user.get().getUser_group()!= null){
+                    response.setModules(moduleService.findModuleByGroup(user.get().getUser_group().getgId()));
+                }else{
+                    response.setModules(null);
+                }
+                response.setUser(loginUser);
+                return ResponseEntity.ok().headers(headers).body(response);
             }else{
                 return ResponseEntity.ok().headers(headers).build();
             }
-
-        }else {
-            System.out.println("no auth");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
     }
 
     @RequestMapping(value="/check", method = RequestMethod.GET)
@@ -92,14 +99,30 @@ public class AuthenticationController {
     public User getUserData(@RequestParam(name = "token") String token) {
         final Optional<User> user = userService.findByUsername(jwtTokenUtil.extractUser(token).getUsername());
         System.out.println(user.get().getUsername());
-        if(token!=null){
-            //System.out.println(moduleService.findModuleByGroup(user.get().getUser_group().getgId()));
+        if (token != null) {
+            if (user.isPresent()) {
+                // Sort the user's modules and sub-modules recursively
+                sortModules(user.get().getUser_group().getModule_groups());
+            }
             return user.get();
-        }else{
+        } else {
             return null;
         }
-
     }
+
+    private void sortModules(List<Module> modules) {
+        // Sort modules based on their "order" field
+        modules.sort(Comparator.comparingInt(Module::getOrder));
+
+        // Recursively sort sub-modules for each module
+        modules.forEach(this::sortModule);
+    }
+
+    private void sortModule(Module module) {
+        // Sort sub-modules based on their "order" field
+        module.getList_sub_modules().sort(Comparator.comparingInt(SubModule::getOrder));
+    }
+
 
 
     public static final String endpoint = "http://ip-api.com/json";
