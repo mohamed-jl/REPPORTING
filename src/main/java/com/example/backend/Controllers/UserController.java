@@ -79,6 +79,11 @@ public class UserController {
         userService.assignFunc(id, rap);
     }
 
+    @RequestMapping(value="exist/{mail}",method=RequestMethod.GET)
+    public boolean userExistByMail(@PathVariable String mail){
+        return userService.existUserByMail(mail);
+    }
+
     @RequestMapping(value="/detach/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
     public void detachRep(@PathVariable Long id, @RequestBody RepRapport rep) {
         userService.detachRep(id,rep);
@@ -173,6 +178,11 @@ public class UserController {
         userRepository.save(user);
 
         return ResponseEntity.ok().body("{\"message\": \"User updated successfully\"}");
+    }
+
+    @GetMapping("/Bymail/{mail}")
+    Optional<User> getUserByEmail(@PathVariable String mail){
+        return Optional.ofNullable(userService.getUserByEmail(mail));
     }
 
 

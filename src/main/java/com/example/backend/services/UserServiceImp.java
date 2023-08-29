@@ -4,7 +4,6 @@ import com.example.backend.dao.GroupRepository;
 import com.example.backend.dao.RepRapportRepository;
 import com.example.backend.dao.RoleRepository;
 import com.example.backend.dao.UserRepository;
-import com.example.backend.entities.Function;
 import com.example.backend.entities.RepRapport;
 import com.example.backend.entities.Role;
 import com.example.backend.entities.User;
@@ -35,12 +34,13 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Autowired
     private RepRapportRepository repRapportRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager em;
 
-    public UserServiceImp() {
+    public UserServiceImp(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -221,5 +221,37 @@ public class UserServiceImp implements UserService, UserDetailsService {
         // user.get().setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(userOptional.get());
         return userOptional.get();
+    }
+
+    @Override
+    public boolean exitUser(Long id) {
+        return false;
+    }
+
+    @Override
+    public boolean existUserByMail(String mail){
+        return !userRepository.getUserByMail(mail).isEmpty();
+    }
+
+    @Override
+    public User getUserByEmail(String mail){
+        return userRepository.getUserByEmail(mail);
+    }
+
+    @Override
+    public void resetPassword(String token, String newPassword) {
+        // Retrieve the user by the token and update the password
+        Optional<User> optionalUser = userRepository.getUserByResetToken(token);
+        System.out.println(optionalUser.get().getPassword());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            System.out.println("old pass: "+user.getPassword());
+            user.setPassword(passwordEncoder.encode(newPassword));
+            System.out.println("new pass: "+user.getPassword());
+
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("Invalid token");
+        }
     }
 }

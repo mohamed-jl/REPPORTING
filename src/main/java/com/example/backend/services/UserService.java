@@ -35,4 +35,12 @@ public interface UserService {
     List<BigInteger> findReportsByUserId(Long functionId);
 
     User updatePassword(String username, String oldPassword, String newPassword) throws Exception;
+
+    boolean exitUser(Long id);
+
+    boolean existUserByMail(String mail);
+
+    User getUserByEmail(String mail);
+
+    void resetPassword(String token, String newPassword);
 }
