@@ -1,0 +1,53 @@
+<div class="container">
+    <h2>List of Modules</h2>
+    <button mat-raised-button color="primary" (click)="openDialog()">Assign Module</button>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Module ID</th>
+                <th>Module Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let module of modules">
+                <td>{{module.id}}</td>
+
+                <td>{{module.moduleName}}</td>
+                <td>
+                    <button class="btn btn-danger" (click)="onDeleteModule(groupId,module.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="container">
+    <h2>List of Functions</h2>
+    <button mat-raised-button color="primary" (click)="openFctDialog()">Assign Function</button>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Function ID</th>
+                <th>Function Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let func of fonctions">
+                <td>{{func.id}}</td>
+
+                <td>{{func.functionName}}</td>
+                <td>
+                    <button class="btn btn-danger" (click)="onDeleteFonction(groupId,func.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,37 @@
+.diag {
+    display: inline-table;
+    padding: 20px;
+}
+
+.container {
+    margin: 20px;
+}
+
+.full-width {
+    width: 80%;
+}
+
+.mat-form-field {
+    margin-bottom: 20px;
+}
+
+.cancel-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    text-align: center;
+    margin-top: 20px;
+}

@@ -1,0 +1,66 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Group Managment</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Group Managment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-container">
+    <button class="btnn" (click)="openNestedGrid()">Create New Group</button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="gId">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.gId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="gName">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.gName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="gDescription">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.gDescription}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dateCreation">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> Creation Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateCreation | date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dateModif">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> Modification Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateModif | date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="etat">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> State </th>
+            <td mat-cell *matCellDef="let element"> {{element.etat}} </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="background-color: lightgray;"> Actions </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="openUpdateGroupModal(element)" class="btn">
+              <mat-icon class="edit">edit</mat-icon>
+            </button>
+                <button mat-icon-button (click)="deleteElement(element.gId)" class="btn">
+              <mat-icon class="delete">delete</mat-icon>
+            </button>
+
+                <button mat-icon-button (click)="onSelect(element)" class="btn btn-warning" color="primary">
+        <mat-icon>info</mat-icon>
+</button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+</div>
+<div class="pag">
+    <mat-paginator [pageSizeOptions]="[5,10, 20, 50]" showFirstLastButtons></mat-paginator>
+</div>

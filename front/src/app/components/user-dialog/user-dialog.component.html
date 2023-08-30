@@ -1,0 +1,67 @@
+<h2 mat-dialog-title class="title">{{ user.uId ? 'Edit User' : 'Add User' }}</h2>
+<div mat-dialog-content class="content">
+    <form>
+        <div class="input-container">
+            <mat-form-field>
+                <input matInput type="Nom" placeholder="Name" [(ngModel)]="user.nomUtilisateur" required name="nomUtilisateur">
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <input matInput placeholder="Department" [(ngModel)]="user.uDepart" required name="uDepart">
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <input matInput placeholder="Matricule" [(ngModel)]="user.uMatricule" required name="uMatricule">
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email" [(ngModel)]="user.uMail" required name="uMail">
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <input matInput placeholder="Username" [(ngModel)]="user.username" required name="username">
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="user.password" name="password">
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <mat-label>State</mat-label>
+                <mat-select [(ngModel)]="user.etat" name="etat">
+                    <mat-option *ngFor="let option of etatOptions" [value]="option.value">
+                        {{ option.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <mat-label>Group</mat-label>
+                <mat-select [(ngModel)]="selectedGroup" [compareWith]="compareGroupFn" name="group">
+                    <mat-option *ngFor="let group of groups$ | async" [value]="group">{{ group.gName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="input-container">
+            <mat-form-field>
+                <mat-label>User Role</mat-label>
+                <mat-select [(ngModel)]="selectedRole" name="role">
+                    <mat-option *ngFor="let role of roles" [value]="role">
+                        {{ role.role }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions class="actions">
+    <button mat-button color="primary" (click)="saveUser()">Save</button>
+    <button mat-button color="accent" (click)="cancel()">Cancel</button>
+</div>

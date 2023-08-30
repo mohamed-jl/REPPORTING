@@ -1,0 +1,97 @@
+table {
+    width: 100%;
+}
+.mat-elevation-z8{
+    border-radius: 6px;
+
+}
+
+.btn {
+    padding: 0;
+    border: none;
+    background: none;
+    margin: 10px;
+}
+
+.btn-container {
+    margin: 20px;
+    
+}
+
+button {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    margin: 1rem 0;
+    border: none;
+}
+
+button:hover {
+    background-color: #9acafd;
+}
+
+.btnn {
+    color:black;
+    background-color: white;
+    border:1px solid #343a40;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    margin: 1rem 0;
+}
+
+.btnn:hover {
+    background-color: #343a40;
+    color:white;
+}
+
+.table-container {
+    position: relative;
+    height: 100%;
+}
+
+mat-paginator {
+    background: transparent;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    margin-bottom: 50px;
+}
+
+.material-icons.edit {
+    color: #007bff;
+    background-color: transparent;
+}
+
+.material-icons.delete {
+    color: red;
+    background-color: transparent;
+}
+
+.material-icons.info {
+    color: yellow;
+    background-color: transparent;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 300px;
+    /* set a minimum height for the container */
+}
+
+.mat-table {
+    flex: 1;
+    /* set the table to fill the available space */
+}
+
+.paginator-style {
+    background-color: white;
+}

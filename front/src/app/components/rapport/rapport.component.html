@@ -1,0 +1,26 @@
+<div class="container">
+    <div mat-dialog-content>
+        <h2 mat-dialog-title class="title">Select Function and Rapports</h2>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Select Function</mat-label>
+            <input type="text" matInput [formControl]="functionControl" [matAutocomplete]="functionAuto" [value]="functionControl.value?.functionName">
+            <mat-autocomplete #functionAuto>
+                <mat-option *ngFor="let f of filteredFunctions | async" [value]="f">{{ f.functionName }}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Select Report</mat-label>
+            <input type="text" matInput [formControl]="repRapportControl" [matAutocomplete]="repRapportAuto" [value]="repRapportControl.value?.name">
+            <mat-autocomplete #repRapportAuto>
+                <mat-option *ngFor="let r of filteredRepRapports | async" [value]="r">{{ r.name }}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="assignRepRapportToFunction()">Assign</button>
+        <button mat-button color="warn" (click)="cancel()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="diag">
+    <button mat-icon-button class="cancel-button" (click)="closeDialog()">
+            <mat-icon>close</mat-icon>
+        </button>
+    <h2 mat-dialog-title class="title">Select User and Rapports</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-container">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Select User</mat-label>
+                        <mat-select [(ngModel)]="selectedUser" placeholder="Select User">
+                            <mat-option *ngFor="let user of users" [value]="user">{{user.username}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Select RepRapports</mat-label>
+                        <mat-select [(ngModel)]="selectedRapports" multiple placeholder="Select RepRapports">
+                            <mat-option *ngFor="let rapport of allRapports" [value]="rapport">{{rapport.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="button-container">
+                    <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

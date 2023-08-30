@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>
+    Reports List
+    <button mat-icon-button color="warn" aria-label="Cancel" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</h2>
+<mat-table [dataSource]="user.listreprapport">
+    <!-- Define the columns -->
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.title }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="warn" aria-label="Delete" (click)="detacheRapport(user.uId,row)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Display the columns -->
+    <mat-header-row *matHeaderRowDef="['name', 'title', 'actions']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'title', 'actions']"></mat-row>
+</mat-table>

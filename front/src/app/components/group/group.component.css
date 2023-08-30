@@ -1,0 +1,79 @@
+table {
+    width: 100%;
+}
+
+.btn {
+    padding: 0;
+    border: none;
+    background: none;
+    margin: 10px;
+}
+
+.btnn{
+    border: 1px solid black;
+    border-radius: 20px;
+    color: black;
+    background-color: #fff;
+    height: 40px;
+}
+
+.btnn:hover{
+    color:white;
+    background-color: #000;
+}
+
+button {
+    background-color: #007bff;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    margin: 1rem 0;
+    border: none;
+}
+
+button:hover {
+    background-color: #dfdfdf;
+    border-radius: 25px;
+}
+
+.table-container {
+    position: relative;
+    height: 100%;
+}
+
+mat-paginator {
+    background: transparent;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    margin-bottom: 50px;
+}
+
+.material-icons.edit {
+    color: #007bff;
+}
+
+.material-icons.delete {
+    color: red;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 300px;
+    /* set a minimum height for the container */
+}
+
+.mat-table {
+    flex: 1;
+    /* set the table to fill the available space */
+}
+
+.pag {
+    margin: 50px;
+}

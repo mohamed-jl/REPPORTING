@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Update Function</h1>
+<div mat-dialog-content>
+    <form [formGroup]="updateFunctionForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Function Name" formControlName="functionName">
+            <mat-error *ngIf="updateFunctionForm.controls['functionName'].invalid">
+                Function name is required.
+            </mat-error>
+        </mat-form-field>
+
+
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" type="submit" (click)="onSubmit()">Update</button>
+</div>

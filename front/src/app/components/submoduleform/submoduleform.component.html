@@ -1,0 +1,32 @@
+<div class="add-submodule-container">
+    <h2>Add Submodule</h2>
+    <form [formGroup]="addSubmoduleForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="subModuleName">Submodule Name:</label>
+            <input type="text" class="form-control" id="subModuleName" formControlName="subModuleName" required>
+            <div *ngIf="addSubmoduleForm.controls['subModuleName'].invalid && (addSubmoduleForm.controls['subModuleName'].dirty || addSubmoduleForm.controls['subModuleName'].touched)" class="text-danger">
+                <div *ngIf="addSubmoduleForm.controls['subModuleName'].errors ">Submodule Name is required.</div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="moduleId">Module:</label>
+            <input type="text" class="form-control" id="moduleId" [formControl]="moduleCtrl" [matAutocomplete]="auto" required [value]="moduleCtrl.value?.moduleName">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let module of filteredModules | async" [value]="module">
+                    {{ module.moduleName }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+
+
+
+        <div class="button-group">
+            <button mat-raised-button color="primary" type="submit" class="btn btn-primary">Add Submodule</button>
+            <button mat-raised-button mat-dialog-close>Cancel</button>
+        </div>
+
+    </form>
+</div>

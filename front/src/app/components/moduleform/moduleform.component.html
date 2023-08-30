@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ data?.module ? 'Edit' : 'Add' }} Module</h2>
+<div mat-dialog-content>
+    <form [formGroup]="moduleForm">
+        <mat-form-field>
+            <input matInput formControlName="moduleName" placeholder="Module Name" required>
+            <mat-error *ngIf="moduleForm.get('moduleName')?.invalid">
+                Module Name is required
+            </mat-error>
+        </mat-form-field>
+
+
+
+        <!-- <div *ngIf="selectedSubmodules.length > 0" class="selected-submodules">
+            <p class="selected-submodules-title">Selected Submodules:</p>
+            <div class="selected-submodules-container">
+                <div *ngFor="let submodule of selectedSubmodules" class="selected-submodule">
+                    <mat-icon class="remove-icon" (click)="toggleSubmodule(submodule)">close</mat-icon>
+                    <span>{{ submodule.subModuleName }} ({{ submodule.path }})</span>
+                </div>
+            </div>
+        </div> -->
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="saveModule()" [disabled]="!moduleForm.valid">
+        {{ data?.module ? 'Update' : 'Add' }} Module
+    </button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+</div>

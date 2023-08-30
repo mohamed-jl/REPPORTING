@@ -1,0 +1,78 @@
+<div mat-dialog-title class="dialog-title">
+    {{ group.gId !== 0 ? 'Edit Group' : 'Add New Group' }}
+    <button mat-icon-button (click)="dialogRef.close()" class="dialog-close">
+      <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+
+    <div mat-dialog-content class="dialog-content">
+
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Group Name</mat-label>
+                <input matInput type="text" formControlName="gName" placeholder="Enter Group Name">
+                <mat-icon matSuffix>group</mat-icon>
+                <mat-error *ngIf="form.get('gName')?.invalid && form.get('gName')?.touched">Group Name is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Group Description</mat-label>
+                <textarea matInput rows="4" formControlName="gDescription" placeholder="Enter Group Description"></textarea>
+                <mat-icon matSuffix>description</mat-icon>
+                <mat-error *ngIf="form.get('gDescription')?.invalid && form.get('gDescription')?.touched">Group Description is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Select Modules</mat-label>
+                <mat-select formControlName="modules" multiple [compareWith]="compareModules">
+                    <mat-option *ngFor="let module of modules" [value]="module.id">
+                        {{ module.moduleName }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+                <mat-error *ngIf="form.get('modules')?.invalid && form.get('modules')?.touched">
+                    At least one module is required
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Select Submodule</mat-label>
+                <mat-select formControlName="submodule">
+                    <mat-option *ngFor="let submodule of submodules" [value]="submodule.id">
+                        {{ submodule.subModuleName }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Select Function</mat-label>
+                <mat-select formControlName="function">
+                    <mat-option *ngFor="let func of functions" [value]="func.id">
+                        {{ func.functionName }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+            </mat-form-field>
+        </div>
+
+
+
+    </div>
+
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-raised-button color="primary" type="submit">{{ group.gId !== 0 ? 'Update' : 'Create' }}</button>
+    </div>
+
+</form>

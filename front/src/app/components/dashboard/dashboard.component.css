@@ -1,0 +1,139 @@
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+}
+
+.layout-navbar-fixed .wrapper .brand-link {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    transition: width .3s ease-in-out;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-letter {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.main-footer {
+    clear: both;
+}
+
+.btn {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: none;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+.btn .btn-icon {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+.btn .btn-text {
+    display: inline-block;
+    margin-left: 50px;
+}
+
+
+/* .main-sidebar {
+    width: auto;
+} */
+
+.arrow {
+    margin-left: 7px;
+    transition: transform 0.2s ease;
+}
+
+.arrow-right {
+    transform: rotate(0deg);
+}
+
+.arrow-down {
+    transform: rotate(90deg);
+}
+
+.function-icon {
+    margin-right: 10px;
+}
+
+.function-name {
+    color: #a1a5ae;
+}
+
+.module-heading,
+.sub-module-heading {
+    height: 30px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #a1a5ae;
+}
+
+.module-name {
+    margin-left: 10px;
+}
+
+.sub-module-name {
+    padding-left: 20px;
+}
+
+.module-heading:hover,
+.sub-module-heading:hover {
+    background-color: #454d55;
+}
+
+.nav-link:hover {
+    background-color: #454d55;
+}
+
+.function {
+    margin: 10px;
+    margin-left: 30px;
+}
+
+li.sub-module {
+    margin: 15px;
+}

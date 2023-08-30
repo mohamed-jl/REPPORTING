@@ -1,0 +1,114 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="container">
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Group Name</mat-label>
+                <input matInput type="text" formControlName="gName" placeholder="Enter Group Name">
+                <mat-icon matSuffix>group</mat-icon>
+                <mat-error *ngIf="form.get('gName')?.invalid && form.get('gName')?.touched">Group Name is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-field">
+            <mat-form-field appearance="outline">
+                <mat-label>Group Description</mat-label>
+                <textarea matInput rows="1" formControlName="gDescription" placeholder="Enter Group Description"></textarea>
+                <mat-icon matSuffix>description</mat-icon>
+                <mat-error *ngIf="form.get('gDescription')?.invalid && form.get('gDescription')?.touched">Group Description is required</mat-error>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" type="submit">{{ group.gId !== 0 ? 'Edit Group' : 'Add New Group' }}</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Module Name</th>
+                    <th>Sub-Modules</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let module of modules">
+                    <tr (click)="module.expanded = !module.expanded ;toggleSelection(module)">
+                        <td class="expand-collapse-column d-flex">
+                            <mat-checkbox [checked]="module.selected"></mat-checkbox>
+                            <button class="toggle-btn">
+                                <mat-icon class="toggle-icon" [ngClass]="{'expanded': module.expanded, 'collapsed': !module.expanded}">keyboard_arrow_down</mat-icon>
+                              </button>
+                        </td>
+
+                        <td>{{ module.id }}</td>
+                        <td>{{ module.moduleName }}</td>
+                        <td>{{module.list_sub_modules.length}}</td>
+                    </tr>
+                    <tr *ngIf="module.expanded">
+                        <td></td>
+                        <td colspan="3">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Sub-Module Name</th>
+                                        <th>Path</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let subModule of module.list_sub_modules">
+                                        <tr>
+                                            <td>{{ subModule.id }}</td>
+                                            <td>{{ subModule.subModuleName }}</td>
+                                            <td>{{ subModule.path }}</td>
+                                        </tr>
+                                        <tr *ngIf="subModule.functions.length">
+                                            <td class="expand-collapse-column"></td>
+                                            <td colspan="2">
+                                                <input type="checkbox" (change)="onCheckboxChange($event)">()
+                                                <button class="toggle-btn" (click)="subModule.expanded = !subModule.expanded">
+                                <mat-icon class="toggle-icon" [ngClass]="{'expanded': subModule.expanded, 'collapsed': !subModule.expanded}">keyboard_arrow_down</mat-icon>
+                                Functions : {{subModule.functions.length}}
+                              </button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="subModule.expanded && subModule.functions.length">
+                                            <td></td>
+                                            <td colspan="2">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Function Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container *ngFor="let func of subModule.functions">
+                                                            <tr>
+                                                                <td>
+                                                                    <mat-checkbox (change)="onFunctionsSelected($event.checked, func)" [checked]="selectedFunctionsList.includes(func)">{{func.functionName}}</mat-checkbox>
+                                                                </td>
+                                                                <td>{{ func.id }}</td>
+                                                                <td>{{ func.functionName }}</td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+
+        <div class="pag">
+            <mat-paginator [pageSizeOptions]="[5,10, 20, 50]" showFirstLastButtons></mat-paginator>
+        </div>
+
+    </div>
+
+</form>

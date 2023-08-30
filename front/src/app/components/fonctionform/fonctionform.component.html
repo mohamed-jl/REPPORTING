@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>Add Function</h2>
+    <form [formGroup]="functionForm" (ngSubmit)="onSubmit()" class="form">
+        <mat-form-field appearance="fill">
+            <mat-label>Function Name:</mat-label>
+            <input matInput type="text" id="functionName" formControlName="functionName" required>
+            <mat-error *ngIf="functionForm.controls['functionName'].invalid && (functionForm.controls['functionName'].dirty || functionForm.controls['functionName'].touched)">
+                Function Name is required.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Submodule:</mat-label>
+            <input matInput type="text" id="submoduleId" [formControl]="submoduleCtrl" [matAutocomplete]="auto" required [value]="submoduleCtrl.value?.subModuleName">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let submodule of filteredSubmodules | async" [value]="submodule">
+                    {{ submodule.subModuleName }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+        <div class="button-group">
+            <button mat-raised-button color="primary" type="submit" class="btn btn-primary">Add Function</button>
+            <button mat-raised-button mat-dialog-close (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

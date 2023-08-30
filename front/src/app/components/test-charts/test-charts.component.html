@@ -1,0 +1,10 @@
+<ng-container>
+    <div *ngFor="let chart of chartOptions; index as i" class="chart-wrapper responsive-chart">
+        <div class="chart-container" [id]="'chartc-' + i">
+            <highcharts-chart *ngIf="chartData[i].chart_type != 'table'" [Highcharts]="highcharts" [options]="chart" class="chart"></highcharts-chart>
+            <ng-container *ngIf="chartData[i].chart_type == 'table'">
+                <app-paginated-table *ngIf="chartData[i].chart_type == 'table'" [columns]="chartData[i].listnamereptab" [data]="chartData[i].list_de_donnees" [idrep]="chartData[i].id_report" [title]="chartData[i].name_rep"></app-paginated-table>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>

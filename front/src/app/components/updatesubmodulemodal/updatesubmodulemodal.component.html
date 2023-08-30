@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Update Submodule</h1>
+<div mat-dialog-content>
+    <form [formGroup]="updateSubmoduleForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Submodule Name" formControlName="subModuleName">
+            <mat-error *ngIf="updateSubmoduleForm.controls['subModuleName'].invalid">
+                Submodule name is required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Path" formControlName="path">
+            <mat-error *ngIf="updateSubmoduleForm.controls['path'].invalid">
+                Path is required.
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" type="submit" (click)="onSubmit()">Update</button>
+</div>

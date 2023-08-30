@@ -1,0 +1,71 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-lg-6">
+                <div class="small-box bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Treated Interco CDRS</h5>
+                        <div class="info">
+                            <p class="subtitle">Date: {{ cdrInfo.intercoDateDate }}</p>
+                            <p class="card-text">{{ cdrInfo.countInterco }}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="small-box bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Treated IxTools CDRS</h5>
+                        <div class="info">
+                            <p class="subtitle">Date: {{ cdrInfo.ixToolsDate }}</p>
+                            <p class="card-text">{{ cdrInfo.countIxTools }}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion ion-pie-graph"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+        <app-kpi-chart></app-kpi-chart>
+        <div class="top-buttons">
+            <button mat-raised-button color="primary" (click)="openOrderDiag()">Order Charts</button>
+        </div>
+    </div>
+
+
+    <ng-container>
+        <div *ngFor="let chart of chartOptions; index as i" class="chart-wrapper responsive-chart">
+            <div class="chart-container" [id]="'chartc-' + i" title={{chartData[i].seriessubtitle}}>
+                <highcharts-chart *ngIf="chartData[i].chart_type != 'table'" [Highcharts]="highcharts" [options]="chart" class="chart"></highcharts-chart>
+                <ng-container *ngIf="chartData[i].chart_type == 'table' || isTable">
+                    <app-paginated-table *ngIf="chartData[i].chart_type == 'table'" [columns]="chartData[i].listnamereptab" [data]="chartData[i].list_de_donnees" [idrep]="chartData[i].id_report" [title]="chartData[i].name_rep"></app-paginated-table>
+                </ng-container>
+            </div>
+            <div class="button-container">
+                <button mat-raised-button color="primary" (click)="removeFromDashboard(chartData[i].id_report)">Remove from Dashboard</button>
+                <button mat-raised-button color="primary" (click)="exportXLSX(chartData[i].list_de_donnees,chartData[i].listnamereptab,chartData[i].name_rep)">Export XLSX</button>
+                <mat-form-field>
+                    <mat-label>Select chart type</mat-label>
+                    <mat-select [(value)]="chartData[i].chart_type" (selectionChange)="updateChartType(i,$event)">
+                        <mat-option *ngFor="let type of highchartsTypes" [value]="type.value">{{type.label}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+        </div>
+    </ng-container>

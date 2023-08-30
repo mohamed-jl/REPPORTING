@@ -1,0 +1,137 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Module Managment</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Module Managment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="btn-container">
+        <button class="btnn" (click)="openModuleForm()">Create New Module</button>
+        <button class="btnn" style="margin-left: 100px;" (click)="openSubModuleForm()">Create New SubModule</button>
+        <button class="btnn" style="margin-left: 100px;" (click)="openFonctionForm()">Create New Function</button>
+        <button class="btnn" style="margin-left: 50px;" (click)="openRapportForm()">Assign Rapport</button>
+
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Module Name</th>
+                <th>Sub-Modules</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let module of modules">
+                <tr (click)="module.expanded = !module.expanded">
+                    <td class="expand-collapse-column">
+                        <button class="toggle-btn">
+                <mat-icon class="toggle-icon" [ngClass]="{'expanded': module.expanded, 'collapsed': !module.expanded}">keyboard_arrow_down</mat-icon>
+                </button>
+                    </td>
+                    <td>{{ module.id }}</td>
+                    <td>{{ module.moduleName }}</td>
+                    <td>{{module.list_sub_modules.length}}</td>
+                    <td>
+                        <button mat-icon-button (click)="editElement(module)" class="btn">
+                    <mat-icon class="edit">edit</mat-icon>
+                    </button>
+                        <button mat-icon-button (click)="deleteElement(module.id)" class="btn">
+                    <mat-icon class="delete">delete</mat-icon>
+                    </button>
+                    </td>
+                </tr>
+                <tr *ngIf="module.expanded">
+                    <td></td>
+                    <td colspan="3">
+                        <table>
+                            <thead>
+                                <tr>
+
+                                    <th>ID</th>
+                                    <th>Sub-Module Name</th>
+                                    <th>Path</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let subModule of module.list_sub_modules">
+                                    <tr>
+                                        <td>{{ subModule.id }}</td>
+                                        <td>{{ subModule.subModuleName }}</td>
+                                        <td>{{ subModule.path }}</td>
+                                        <td>
+                                            <button mat-icon-button (click)="deleteSubmodule(subModule.id)" class="btn">
+                                            <mat-icon class="delete">delete</mat-icon>
+                                        </button>
+
+
+                                            <button mat-icon-button class="btn" (click)="openUpdateSubmoduleModal(subModule)">
+                                        <mat-icon class="edit">edit</mat-icon>
+                                    </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr *ngIf="subModule.functions.length">
+                                        <td class="expand-collapse-column"></td>
+                                        <td colspan="2">
+                                            <button class="toggle-btn" (click)="subModule.expanded = !subModule.expanded">
+                            <mat-icon class="toggle-icon" [ngClass]="{'expanded': subModule.expanded, 'collapsed': !subModule.expanded}">keyboard_arrow_down</mat-icon> Functions : {{subModule.functions.length}}
+                        </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="subModule.expanded && subModule.functions.length">
+                                        <td></td>
+                                        <td colspan="2">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Function Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container *ngFor="let func of subModule.functions">
+                                                        <tr>
+                                                            <td>{{ func.id }}</td>
+                                                            <td>{{ func.functionName }}</td>
+                                                            <td>
+                                                                <button mat-icon-button (click)="deleteFunction(func.id)" class="btn">
+                                                                <mat-icon class="delete">delete</mat-icon></button>
+                                                                <button mat-icon-button (click)="openUpdateFunctionModal(func)" class="btn">
+                                                                    <mat-icon class="edit">edit</mat-icon>
+                                                            </button>
+                                                                <button mat-icon-button (click)="onSelect(func)" class="btn">
+                                                                <mat-icon>info</mat-icon>
+                                                        </button>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+
+    </table>
+    <div class="pag">
+        <mat-paginator [pageSizeOptions]="[5,10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+
+</div>

@@ -1,0 +1,31 @@
+.mat-table mat-row {
+    cursor: pointer;
+}
+
+.mat-table mat-row:hover {
+    background-color: #f5f5f5;
+    /* Choose the color that fits your design */
+}
+
+.mat-table mat-row.selected {
+    background-color: #e0e0e0;
+    /* Choose the color that fits your design */
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.search-input {
+    flex: 1;
+    margin-right: 16px;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-width 0.3s;
+}
+
+.search-input.active {
+    max-width: 200px;
+}

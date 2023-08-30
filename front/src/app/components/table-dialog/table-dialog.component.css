@@ -1,0 +1,52 @@
+/* .table-dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+} */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0px !important;
+}
+
+.table-dialog-title {
+    margin-top: 16px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.search-input {
+    flex: 1;
+    margin-right: 16px;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-width 0.3s;
+}
+
+.search-input.active {
+    max-width: 200px;
+}
+
+.btn-primary {
+    margin-top: 16px;
+}

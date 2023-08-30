@@ -1,0 +1,14 @@
+<div class="mapcontainer">
+    <div class="controls">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" [(ngModel)]="startDate">
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" [(ngModel)]="endDate">
+
+        <button (click)="getSites(100)">Top 100</button>
+        <button (click)="getSites(50)">Top 50</button>
+        <button (click)="getSites('all')">All Sites</button>
+    </div>
+    <div id="map"></div>
+</div>

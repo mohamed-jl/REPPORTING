@@ -1,0 +1,10 @@
+<ng-container>
+    <div class="dialog-header">
+        <button class="close-icon" (click)="cancel()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="list-container" #listContainer>
+        <div cdkDropList class="example-list" (cdkDropListDropped)="onDrop($event)">
+            <div class="example-box" *ngFor="let report of reports" cdkDrag>{{report.name}}</div>
+        </div>
+    </div>
+</ng-container>
